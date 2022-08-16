@@ -1,0 +1,39 @@
+<div class="list-group">
+
+    <div class="list-group-item list-group-item-action flex-column align-items-start active">
+      <div class="d-flex w-100 justify-content-between">
+        <h4 class="mb-1">This is a list of enquiries</h4>
+      </div>
+    </div>
+
+  {% for enquiry in enquiries %}
+        <a href="/enquiries/{{enquiries_id}}/enquiry/{{enquiry.id}}/"
+           class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-500 justify-content-between">
+            <h4 class="mb-1">{{ enquiry.name }}</h4>
+              <div class="post-date">{{ moment(enquiry.timestamp).fromNow() }}</div>
+          </div>
+          <p class="mb-1">{{ enquiry.body }} </p>
+          <small>
+              {% if enquiry.status.value == 'added' %}
+                  <span class="label label-pill label-info">
+                      {{ enquiry.status.value }}
+                  </span>
+              {% elif enquiry.status.value == 'active' %}
+                  <span class="label label-pill label-success">
+                      {{ enquiry.status.value }}
+                  </span>
+              {% elif enquiry.status.value == 'inactive' %}
+                  <span class="label label-pill label-warning">
+                      {{ enquiry.status.value }}
+                  </span>
+              {% elif enquiry.status.value == 'removed' %}
+                  <span class="label label-pill label-danger">
+                      {{ enquiry.status.value }}
+                  </span>
+              {% endif %}
+          </small>
+        </a>
+  {% endfor %}
+
+</div>

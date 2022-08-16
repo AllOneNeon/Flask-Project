@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - Enquiry{% endblock %}
+
+{% block page_content %}
+
+<div class="list-group-item list-group-item-action flex-column align-items-start active">
+    <div class="d-flex w-100 justify-content-between">
+      <h4 class="mb-1">Enquiry</h4>
+    </div>
+</div>
+<div class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-500 justify-content-between">
+      <h4 class="mb-1">{{ enquiry.name }}</h4>
+        <div class="post-date">{{ moment(enquiry.timestamp).fromNow() }}</div>
+    </div>
+    <p class="mb-1">{{ enquiry.body }} </p>
+        <small>
+            {% if enquiry.status.value == 'added' %}
+                <span class="label label-pill label-info">
+                    {{ enquiry.status.value }}
+                </span>
+            {% elif enquiry.status.value == 'active' %}
+                <span class="label label-pill label-success">
+                    {{ enquiry.status.value }}
+                </span>
+            {% elif enquiry.status.value == 'inactive' %}
+                <span class="label label-pill label-warning">
+                    {{ enquiry.status.value }}
+                </span>
+            {% elif enquiry.status.value == 'removed' %}
+                <span class="label label-pill label-danger">
+                    {{ enquiry.status.value }}
+                </span>
+            {% endif %}
+        </small>
+</div>
+
+{% if form %}
+    <br>
+    <h1>Edit Enquiry</h1>
+    <div>
+        {{ wtf.quick_form(form) }}
+    </div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
